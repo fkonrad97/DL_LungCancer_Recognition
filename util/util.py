@@ -1,15 +1,21 @@
 import collections
 import numpy as np
 
-IrcTuple = collections.namedTuple('IrcTuple', ['index', 'row', 'col'])
-XyzTuple = collections.namedTuple('XyzTuple', ['x', 'y', 'z'])
+IrcTuple = collections.namedtuple('IrcTuple', ['index', 'row', 'col'])
+XyzTuple = collections.namedtuple('XyzTuple', ['x', 'y', 'z'])
 
+'''
+* Flip the coordinates from IRC to CRI, to align with XYZ.
+* Scale the indices with the voxel sizes.
+* Matrix-multiply with the directions matrix, using @ in Python.
+* Add the offset for the origin.
+'''
 # @ - Matrix multiplication
 def irc2xyz(coord_irc, origin_xyz, vxSize_xyz, direction_a):
     cri_a = np.array(coord_irc)[::-1] # Swap the order while we convert to a NumPy array
     origin_a = np.array(origin_xyz)
     vxSize_a = np.array(vxSize_xyz) 
-    coords_xyz = (direction_a @ (cri_a * vxSize_a)) + origin_a # The bottom three steps of the conversion
+    coords_xyz = (direction_a @ (cri_a * vxSize_a)) + origin_a # The bottom three steps of the conversion: So basically, with vxSize_a, we scale the newly rotated cri and then multiply it with the direction matrix and finally add the offset: origin_a
     return XyzTuple(*coords_xyz) # https://stackoverflow.com/questions/36901/what-does-double-star-asterisk-and-star-asterisk-do-for-parameters
 
 def xyz2irc(coord_xyz, origin_xyz, vxSize_xyz, direction_a):
