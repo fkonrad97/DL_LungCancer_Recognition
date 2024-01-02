@@ -1,4 +1,5 @@
-luna_env
+venv
+luna_venv
 data
 Deep-Learning-with-PyTorch.pdf
 .DS_Store
