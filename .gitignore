@@ -1,7 +1,9 @@
 venv
-luna_venv
+luna_env
 data
 Deep-Learning-with-PyTorch.pdf
 .DS_Store
 data-unversioned
 __pycache__
+.idea
+.ipynb_checkpoints
